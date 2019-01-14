@@ -9,4 +9,6 @@ export { ProjectsService } from './lib/projects/projects.service';
 export { CustomersFacade } from './lib/state/customers/customers.facade';
 
 // expose project state to other modules
-export { ProjectsState } from './lib/state/projects/projects.reducer'
+export { ProjectsState } from './lib/state/projects/projects.reducer';
+// this will make it available for our consumption inside of our projects feature
+export { SelectProject, AddProject, UpdateProject, DeleteProject } from './lib/state/projects/projects.actions';

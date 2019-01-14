@@ -1,4 +1,5 @@
 import { Project } from './../../projects/project.model';
+import { ProjectsActionTypes } from './projects.actions';
 
 const initialProjects: Project[] = [
   {
@@ -50,23 +51,23 @@ export const initialState: ProjectsState = {
 // with a payload (usually saying this needs to happen or this is what happened)
 export function projectsReducers(state = initialState, action): ProjectsState {
   switch(action.type) {
-    case 'select':
+    case ProjectsActionTypes.ProjectSelected:
       return {
         selectedProjectId: action.payload,
         projects: state.projects
       }
-    case 'create':
+    case ProjectsActionTypes.AddProject:
       // performing some logic delegating to a stand alone function (bc it is testable)
       return {
         selectedProjectId: state.selectedProjectId,
         projects: createProject(state.projects, action.payload)
       }
-    case 'update':
+    case ProjectsActionTypes.UpdateProject:
       return {
         selectedProjectId: state.selectedProjectId,
         projects: updateProject(state.projects, action.payload)
       }
-    case 'delete':
+    case ProjectsActionTypes.DeleteProject:
       return {
         selectedProjectId: state.selectedProjectId,
         projects: deleteProject(state.projects, action.payload)

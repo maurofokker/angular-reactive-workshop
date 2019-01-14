@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { Customer, Project, ProjectsService, NotificationsService, CustomersService, ProjectsState } from '@workshop/core-data';
+import { Customer, Project, ProjectsService, NotificationsService, CustomersService, ProjectsState, AddProject, UpdateProject, DeleteProject } from '@workshop/core-data';
 import { Store, select } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 
@@ -69,7 +69,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   createProject(project) {
-    this.store.dispatch({ type: 'create', payload: project });
+    this.store.dispatch(new AddProject(project));
 
     // to be deleted eventually
     this.ns.emit('Project created!'); // this will emit an event to display this msg
@@ -84,7 +84,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   updateProject(project) {
-    this.store.dispatch({ type: 'update', payload: project });
+    this.store.dispatch(new  UpdateProject(project));
 
     // to be deleted eventually
     this.ns.emit('Project updated!');
@@ -99,7 +99,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   deleteProject(project) {
-    this.store.dispatch({ type: 'delete', payload: project });
+    this.store.dispatch(new DeleteProject(project));
 
     // to be deleted eventually
     this.ns.emit('Project deleted!');
