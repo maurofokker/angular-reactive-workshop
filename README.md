@@ -201,3 +201,33 @@ Beneficios en rendimiento:
       </app-projects-list>
     </div>
   ``` 
+
+### Reducers
+
+* Cada operación que realice un reducer debe ser inmutable
+* La creación de un reducer depende del `estado inicial` y de un `action` (que es un objeto)
+* El `action` se compone de un `type` que indica qué acción se debe tomar y un `payload` que indica lo que pasó o pasará
+  ```typescript
+    export function projectsReducers(state = initialState, action): ProjectsState {
+      switch(action.type) {
+        case 'create':
+          // performing some logic delegating to a stand alone function (bc it is testable)
+          return {
+            selectedProjectId: state.selectedProjectId,
+            projects: createProject(state.projects, action.payload)
+          }
+        case 'update':
+          return {
+            selectedProjectId: state.selectedProjectId,
+            projects: updateProject(state.projects, action.payload)
+          }
+        case 'delete':
+          return {
+            selectedProjectId: state.selectedProjectId,
+            projects: deleteProject(state.projects, action.payload)
+          }
+        default:
+          return state;
+      }
+    }
+  ```

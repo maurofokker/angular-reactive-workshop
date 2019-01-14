@@ -50,6 +50,27 @@ export const initialState: ProjectsState = {
 // with a payload (usually saying this needs to happen or this is what happened)
 export function projectsReducers(state = initialState, action): ProjectsState {
   switch(action.type) {
+    case 'select':
+      return {
+        selectedProjectId: action.payload,
+        projects: state.projects
+      }
+    case 'create':
+      // performing some logic delegating to a stand alone function (bc it is testable)
+      return {
+        selectedProjectId: state.selectedProjectId,
+        projects: createProject(state.projects, action.payload)
+      }
+    case 'update':
+      return {
+        selectedProjectId: state.selectedProjectId,
+        projects: updateProject(state.projects, action.payload)
+      }
+    case 'delete':
+      return {
+        selectedProjectId: state.selectedProjectId,
+        projects: deleteProject(state.projects, action.payload)
+      }
     default:
       return state;
   }
