@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { Customer, Project, ProjectsService, NotificationsService, CustomersService, ProjectsState, AddProject, UpdateProject, DeleteProject } from '@workshop/core-data';
+import { Customer, Project, ProjectsService, NotificationsService, CustomersService, ProjectsState,
+  AddProject, UpdateProject, DeleteProject, LoadProjects, initialProjects } from '@workshop/core-data';
 import { Store, select } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 
@@ -30,7 +31,8 @@ export class ProjectsComponent implements OnInit {
     private ns: NotificationsService) {
       this.projects$ = store.pipe(  // returns an observable stream which then we put into a pipe operator
         select('projects'), // give the entire project state
-        map((projectsState: ProjectsState) => projectsState.projects)
+        map(data => data.entities), // entities separate into key - value collection
+        map(data => Object.keys(data).map(k => data[k])) // here we are connecting the models
       )
     }
 
@@ -58,6 +60,7 @@ export class ProjectsComponent implements OnInit {
 
   getProjects() {
     // this.projects$ = this.projectsService.all();
+    this.store.dispatch(new LoadProjects(initialProjects));
   }
 
   saveProject(project) {

@@ -4,13 +4,20 @@ import { Project } from "../../projects/project.model";
 // enum with action types in a single spot
 export enum ProjectsActionTypes {
   ProjectSelected = '[Projects] Selected',
+  LoadProjects = '[Projects] Load data',
   AddProject = '[Projects] Add Data',
   UpdateProject = '[Projects] Update Data',
   DeleteProject = '[Projects] Delete Data',
 }
 
+export class LoadProjects implements Action {
+  readonly type = ProjectsActionTypes.LoadProjects;
+  // need a payload bc we r sending in ... strongly type action object payload
+  constructor(private payload: Project[]) { }
+}
+
 export class AddProject implements Action {
-  readonly type: ProjectsActionTypes.AddProject;
+  readonly type = ProjectsActionTypes.AddProject;
   // need a payload bc we r sending in ... strongly type action object payload
   constructor(private payload: Project) { }
 }
@@ -35,4 +42,5 @@ export type ProjectsActions = SelectProject
   | AddProject
   | UpdateProject
   | DeleteProject
+  | LoadProjects
   ;

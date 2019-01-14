@@ -1,4 +1,5 @@
 <div class="container">
+  <pre>{{projects$ | async | json }}</pre>
   <div class="col-50">
     <app-projects-list
       [projects]="projects$ | async"
