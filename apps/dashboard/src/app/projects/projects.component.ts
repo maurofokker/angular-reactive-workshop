@@ -69,30 +69,48 @@ export class ProjectsComponent implements OnInit {
   }
 
   createProject(project) {
-    this.projectsService.create(project)
-      .subscribe(response => {
-        this.ns.emit('Project created!');
-        this.getProjects();
-        this.resetCurrentProject();
-      });
+    this.store.dispatch({ type: 'create', payload: project });
+
+    // to be deleted eventually
+    this.ns.emit('Project created!'); // this will emit an event to display this msg
+    this.resetCurrentProject();       // reset current project
+
+    // this.projectsService.create(project)
+    //   .subscribe(response => {
+    //     this.ns.emit('Project created!');
+    //     this.getProjects();
+    //     this.resetCurrentProject();
+    //   });
   }
 
   updateProject(project) {
-    this.projectsService.update(project)
-      .subscribe(response => {
-        this.ns.emit('Project saved!');
-        this.getProjects();
-        this.resetCurrentProject();
-      });
+    this.store.dispatch({ type: 'update', payload: project });
+
+    // to be deleted eventually
+    this.ns.emit('Project updated!');
+    this.resetCurrentProject();
+
+    // this.projectsService.update(project)
+    //   .subscribe(response => {
+    //     this.ns.emit('Project saved!');
+    //     this.getProjects();
+    //     this.resetCurrentProject();
+    //   });
   }
 
   deleteProject(project) {
-    this.projectsService.delete(project)
-      .subscribe(response => {
-        this.ns.emit('Project deleted!');
-        this.getProjects();
-        this.resetCurrentProject();
-      });
+    this.store.dispatch({ type: 'delete', payload: project });
+
+    // to be deleted eventually
+    this.ns.emit('Project deleted!');
+    this.resetCurrentProject();
+
+    // this.projectsService.delete(project)
+    //   .subscribe(response => {
+    //     this.ns.emit('Project deleted!');
+    //     this.getProjects();
+    //     this.resetCurrentProject();
+    //   });
   }
 }
 
