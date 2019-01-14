@@ -1,6 +1,8 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { Customer, Project, ProjectsService, NotificationsService, CustomersService } from '@workshop/core-data';
+import { Customer, Project, ProjectsService, NotificationsService, CustomersService, ProjectsState } from '@workshop/core-data';
+import { Store, select } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 
 const emptyProject: Project = {
   id: null,
@@ -17,14 +19,20 @@ const emptyProject: Project = {
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
-  projects$: Observable<Project[]>;
+  projects$: Observable<Project[]>; // 02
   customers$: Observable<Customer[]>;
   currentProject: Project;
 
   constructor(
     private projectsService: ProjectsService,
     private customerService: CustomersService,
-    private ns: NotificationsService) { }
+    private store: Store<ProjectsState>, // 01
+    private ns: NotificationsService) {
+      this.projects$ = store.pipe(  // returns an observable stream which then we put into a pipe operator
+        select('projects'), // give the entire project state
+        map((projectsState: ProjectsState) => projectsState.projects)
+      )
+    }
 
   ngOnInit() {
     this.getProjects();
@@ -49,7 +57,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   getProjects() {
-    this.projects$ = this.projectsService.all();
+    // this.projects$ = this.projectsService.all();
   }
 
   saveProject(project) {

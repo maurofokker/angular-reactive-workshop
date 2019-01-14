@@ -141,3 +141,63 @@ Beneficios en rendimiento:
       fromCustomers.selectAllCustomers
     );
    ```
+5. Cargar el estado desde un componente (ver `projects.component.ts`)
+6. Se debe importar el módulo `StateModule` para poder usar la herramienta de estado ver `core-data.module.ts`
+7. Leer los datos desde el estado
+  ```typescript
+    import { Observable } from 'rxjs';
+    import { Component, OnInit } from '@angular/core';
+    import { Customer, Project, ProjectsService, NotificationsService, CustomersService, ProjectsState } from '@workshop/core-data';
+    import { Store, select } from '@ngrx/store';
+    import { map } from 'rxjs/operators';
+
+    const emptyProject: Project = {
+      id: null,
+      title: '',
+      details: '',
+      percentComplete: 0,
+      approved: false,
+      customerId: null
+    }
+
+    @Component({
+      selector: 'app-projects',
+      templateUrl: './projects.component.html',
+      styleUrls: ['./projects.component.scss']
+    })
+    export class ProjectsComponent implements OnInit {
+      projects$: Observable<Project[]>; // 02
+      customers$: Observable<Customer[]>;
+      currentProject: Project;
+
+      constructor(
+        private projectsService: ProjectsService,
+        private customerService: CustomersService,
+        private store: Store<ProjectsState>, // 01
+        private ns: NotificationsService) {
+          this.projects$ = store.pipe(  // returns an observable stream which then we put into a pipe operator
+            select('projects'), // give the entire project state
+            map((projectsState: ProjectsState) => projectsState.projects)
+          )
+        }
+
+      // code...
+
+      getProjects() {
+        // this.projects$ = this.projectsService.all();
+      }
+
+      // some methods...
+
+    }
+  ```
+8. Despliegue de datos en template
+  ```html
+    <div class="col-50">
+      <app-projects-list
+        [projects]="projects$ | async"
+        (selected)="selectProject($event)"
+        (deleted)="deleteProject($event)">
+      </app-projects-list>
+    </div>
+  ``` 

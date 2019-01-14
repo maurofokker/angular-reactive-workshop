@@ -12,9 +12,9 @@ import { CustomersEffects } from './customers/customers.effects';
   imports: [
     CommonModule,
     NxModule.forRoot(),
-    StoreModule.forRoot(reducers),
-    StoreDevtoolsModule.instrument({ maxAge: 10 }),
-    EffectsModule.forRoot([
+    StoreModule.forRoot(reducers), // take all the combined reducers and make it available
+    StoreDevtoolsModule.instrument({ maxAge: 10 }), // hooks in redux devtools in chrome
+    EffectsModule.forRoot([ // as you create effects, then u need to add them in here
       CustomersEffects
     ]),
   ],
