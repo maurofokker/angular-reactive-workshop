@@ -2,12 +2,19 @@ import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/s
 
 import * as fromCustomers from './customers/customers.reducer';
 
+// brings everything from ProjectsReducers
+import * as fromProjects from './projects/projects.reducer';
+
+// update the shape of the entire app state
 export interface AppState {
-  customers: fromCustomers.CustomersState
+  customers: fromCustomers.CustomersState,
+  projects: fromProjects.ProjectsState,
 }
 
+// add in feature reducer into combined reducer
 export const reducers: ActionReducerMap<AppState> = {
-  customers: fromCustomers.customersReducer
+  customers: fromCustomers.customersReducer,
+  projects: fromProjects.projectsReducers // to satisfied interface we need to export the new reducers
 };
 
 // -------------------------------------------------------------------
