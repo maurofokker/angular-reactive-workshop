@@ -8,6 +8,8 @@ export { Project } from './lib/projects/project.model';
 export { ProjectsService } from './lib/projects/projects.service';
 export { CustomersFacade } from './lib/state/customers/customers.facade';
 
+export { ProjectsFacade } from './lib/state/projects/projects.facade';
+
 // expose project state to other modules
 export { ProjectsState, initialProjects } from './lib/state/projects/projects.reducer';
 // export state selectors ... do not confuse with same names in the above reducer, we want state
