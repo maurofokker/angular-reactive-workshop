@@ -1,5 +1,4 @@
 <div class="container">
-  <pre>{{projects$ | async | json }}</pre>
   <div class="col-50">
     <app-projects-list
       [projects]="projects$ | async"
@@ -10,7 +9,7 @@
 
   <div class="col-50">
     <app-project-details
-      [project]="currentProject"
+      [project]="currentProject$ | async"
       [customers]="customers$ | async"
       (saved)="saveProject($event)"
       (cancelled)="resetCurrentProject($event)">

@@ -4,6 +4,7 @@ import * as fromCustomers from './customers/customers.reducer';
 
 // brings everything from ProjectsReducers
 import * as fromProjects from './projects/projects.reducer';
+import { Project } from '../projects/project.model';
 
 // update the shape of the entire app state
 export interface AppState {
@@ -44,6 +45,29 @@ export const selectAllProjects = createSelector(
   fromProjects.selectAllProjects
 )
 
+export const selectCurrentProjectId = createSelector(
+  selectProjectState,
+  fromProjects.getSelectedProjectId
+)
+
+const emptyProject: Project = {
+  id: null,
+  title: '',
+  details: '',
+  percentComplete: 0,
+  approved: false,
+  customerId: null
+}
+
+export const selectCurrentProject = createSelector(
+  selectProjectEntities,
+  selectCurrentProjectId,
+  (projectEntities, projectId) => {
+    console.log('SELECTOR!', projectId);
+    return projectId ? projectEntities[projectId] : emptyProject;
+  }
+)
+
 // -------------------------------------------------------------------
 // CUSTOMERS SELECTORS
 // -------------------------------------------------------------------
@@ -54,4 +78,16 @@ export const selectAllCustomers = createSelector(
   fromCustomers.selectAllCustomers
 );
 
+export const selectCustomersProjects = createSelector(
+  selectAllCustomers,
+  selectAllProjects,
+  (customers, projects) => {
+    return customers.map(customer => {
+      return Object.assign({}, {
+        ...customer,
+        projects: projects.filter(project => project.customerId === project.id)
+      })
+    })
+  }
+)
 

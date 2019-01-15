@@ -258,3 +258,5 @@ Tomado desde [NgRx Docs](https://ngrx.io/guide/store/selectors)
   - `LoadProjects` will get captured by the effect
   - `ProjectsLoaded` when the operation is completed dispatched this one
 - En lugar de ir enseguida al Reducer, se está yendo a una capa intermedia (middleware) que recibe el objeto entrante, realiza algo con él... y luego saca algo más para terminar
+
+- Un evento entra, lo asíncrono es capturado por el `effect` y luego una vez está hecho basicamente envía un nuevo evento de acción para ser capturado en el `reducer`
