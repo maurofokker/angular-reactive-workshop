@@ -10,5 +10,7 @@ export { CustomersFacade } from './lib/state/customers/customers.facade';
 
 // expose project state to other modules
 export { ProjectsState, initialProjects } from './lib/state/projects/projects.reducer';
+// export state selectors ... do not confuse with same names in the above reducer, we want state
+export { selectAllProjects, selectProjectEntities, selectProjectIds } from './lib/state';
 // this will make it available for our consumption inside of our projects feature
 export { SelectProject, AddProject, UpdateProject, DeleteProject, LoadProjects } from './lib/state/projects/projects.actions';

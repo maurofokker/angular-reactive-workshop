@@ -7,6 +7,7 @@ import { NxModule } from '@nrwl/nx';
 
 import { reducers } from '.';
 import { CustomersEffects } from './customers/customers.effects';
+import { ProjectsEffects } from './projects/projects.effects';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { CustomersEffects } from './customers/customers.effects';
     StoreModule.forRoot(reducers), // take all the combined reducers and make it available
     StoreDevtoolsModule.instrument({ maxAge: 10 }), // hooks in redux devtools in chrome
     EffectsModule.forRoot([ // as you create effects, then u need to add them in here
-      CustomersEffects
+      CustomersEffects,
+      ProjectsEffects // register here
     ]),
   ],
   declarations: []

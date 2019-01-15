@@ -65,9 +65,9 @@ export function projectsReducers(state = initialState, action): ProjectsState {
   switch(action.type) {
     case ProjectsActionTypes.ProjectSelected:
       return Object.assign({}, state, { selectedProjectId: action.payload });
-    case ProjectsActionTypes.LoadProjects:
+    case ProjectsActionTypes.ProjectsLoaded:
       return adapter.addMany(action.payload, state);
-    case ProjectsActionTypes.AddProject:
+    case ProjectsActionTypes.ProjectAdded:
       // performing some logic delegating to a stand alone function (bc it is testable)
       return adapter.addOne(action.payload, state);
     case ProjectsActionTypes.UpdateProject:
@@ -78,3 +78,14 @@ export function projectsReducers(state = initialState, action): ProjectsState {
       return state;
   }
 }
+
+// low level selectors at the feature (projects) reducer
+// Selectors
+export const getSelectedProjectId = (state: ProjectsState) => state.selectedProjectId;
+
+// can get selectors from Entities
+const { selectIds, selectEntities, selectAll } = adapter.getSelectors();
+
+export const selectProjectIds = selectIds;
+export const selectProjectEntities = selectEntities;
+export const selectAllProjects = selectAll;

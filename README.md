@@ -231,3 +231,30 @@ Beneficios en rendimiento:
       }
     }
   ```
+
+## Selectors
+
+Tomado desde [NgRx Docs](https://ngrx.io/guide/store/selectors)
+- Es parte de `@ngrx/store`
+- Permiten abstraer la manipulación de datos en queries compuestas
+- Son funciones puras [Kyle Simpson - Functional Light JS](https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch5.md)
+- Los selectores son funciones puras que se utilizan para obtener porciones del estado del store, reciben alguna información y retornan algo mas
+- Características cuando seleccionan porciones del State:
+  - Portable
+  - Memoization (cache)
+  - Composición
+  - Testeable
+  - Type-safe
+- Al usar las funciones `createSelector` y `createFeatureSelector` el `@ngrx/store` mantiene un seguimiento de los últimos argumentos en donde la función selector fue invocada.
+- Al ser los selectores funciones puras, el último resultado puede ser retornado cuando los argumentos coinciden sin tener que reinvocar la función selectora (mejoras en rendimientos gracias al `memoization`)
+
+## Effects -> Side Effects
+
+- Proporciona una API para modelar orígenes de eventos como acciones
+  - Escucha acciones enviadas desde Store
+  - Aisla efectos secundarios de los componentes, permitiendo componentes más puros que seleccionen State y envien acciones
+  - Proporciona nuevos orígenes de acciones para reducir state basado en interacciones externas como peticiones de red, mensajes web socket y eventos time-based
+- Se dividen acciones, entre las que entran y las que salen... pro ejemplo `LoadProjects` ahora tiene `ProjectsLoaded`
+  - `LoadProjects` will get captured by the effect
+  - `ProjectsLoaded` when the operation is completed dispatched this one
+- En lugar de ir enseguida al Reducer, se está yendo a una capa intermedia (middleware) que recibe el objeto entrante, realiza algo con él... y luego saca algo más para terminar
